@@ -12,6 +12,7 @@ import com.marcos.crud_spring.model.Course;
 import lombok.AllArgsConstructor;
 import repository.CourseRespository;
 
+@SuppressWarnings("unused")
 @RestController
 @RequestMapping ("/api/courses")
 @AllArgsConstructor

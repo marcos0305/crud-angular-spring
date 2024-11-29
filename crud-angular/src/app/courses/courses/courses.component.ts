@@ -5,18 +5,19 @@ import { catchError, Observable, of } from 'rxjs';
 import { error } from 'node:console';
 import { MatDialog } from '@angular/material/dialog';
 import { ErrorDialogComponent } from '../../shared/components/error-dialog/error-dialog.component';
+import { CategoryPipe } from "../../shared/pipes/category.pipe";
 
 @Component({
   selector: 'app-courses',
   standalone: true,
-  imports: [],
+  imports: [CategoryPipe],
   templateUrl: './courses.component.html',
   styleUrl: './courses.component.scss'
 })
 export class CoursesComponent {
 
   courses$: Observable <Course[]>;
-  displayedColumns = ['name', 'category'];
+  displayedColumns = ['_id','name', 'category'];
 
   //coursesService: CoursesService;
 

@@ -16,6 +16,7 @@ public class CrudSpringApplication {
 		SpringApplication.run(CrudSpringApplication.class, args);
 	}
 
+	@SuppressWarnings("unused")
 	@Bean
 	CommandLineRunner initDatabase(CourseRespository courseRespository){
 		return args -> {

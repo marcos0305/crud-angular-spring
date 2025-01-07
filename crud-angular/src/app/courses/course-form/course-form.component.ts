@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, ReactiveFormsModule, FormControl, FormBuilder } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -19,17 +19,18 @@ import { Location } from '@angular/common';
 })
 export class CourseFormComponent {
 
-  form: FormGroup;
+  form: UntypedFormGroup;
 
-  constructor(public formBuilder: FormBuilder,
+  constructor(public UntypedFormBuilder: FormBuilder,
     public service: CoursesService,
     public snackBar: MatSnackBar,
     public location: Location ){
-    this.form = this.formBuilder.group({
-      name:[''],
+    this.form = this.UntypedFormBuilder.group({
+      name: new FormControl (''),
       category:['']
     });
   }
+
   onSubmit(){
     this.service.save(this.form.value)
     .subscribe({

@@ -6,7 +6,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { ErrorDialogComponent } from '../../shared/components/error-dialog/error-dialog.component';
 import { CategoryPipe } from "../../shared/pipes/category.pipe";
 import { ActivatedRoute, Router } from '@angular/router';
-import { relative } from 'path';
+import { CoursesListComponent } from "./courses/courses-list/courses-list.component";
+
 
 @Component({
   selector: 'app-courses',
@@ -18,7 +19,7 @@ import { relative } from 'path';
 export class CoursesComponent {
 
   courses$: Observable <Course[]>;
-  displayedColumns = ['name', 'category', 'actions'];
+
 
   //coursesService: CoursesService;
 

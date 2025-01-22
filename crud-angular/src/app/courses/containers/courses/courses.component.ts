@@ -1,20 +1,22 @@
-import { CoursesService } from './../services/courses.service';
+import { CoursesService } from '../../services/courses.service';
 import { Component } from '@angular/core';
-import { Course } from '../model/course';
+import { Course } from '../../model/course';
 import { catchError, Observable, of } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
-import { ErrorDialogComponent } from '../../shared/components/error-dialog/error-dialog.component';
-import { CategoryPipe } from "../../shared/pipes/category.pipe";
+import { ErrorDialogComponent } from '../../../shared/components/error-dialog/error-dialog.component';
+import { CategoryPipe } from "../../../shared/pipes/category.pipe";
 import { ActivatedRoute, Router } from '@angular/router';
-import { CoursesListComponent } from "./courses/courses-list/courses-list.component";
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { CoursesListComponent } from '../../components/courses-list/courses-list.component';
+import { MatSpinner } from '@angular/material/progress-spinner';
 
 
 @Component({
   selector: 'app-courses',
   standalone: true,
-  imports: [CategoryPipe],
+  imports: [CategoryPipe, MatToolbarModule, CoursesListComponent,MatSpinner],
   templateUrl: './courses.component.html',
-  styleUrl: './courses.component.scss'
+  styleUrl: './courses.component.scss',
 })
 export class CoursesComponent {
 
@@ -45,6 +47,6 @@ export class CoursesComponent {
     });
   }
   onAdd(){
-    //this.router.navigate(commands:['new'], extras:{relativeTo: this.route})
+    this.router.navigate(['new'], {relativeTo: this.route});
   }
 }

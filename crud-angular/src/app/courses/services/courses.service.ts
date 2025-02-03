@@ -15,7 +15,9 @@ export class CoursesService {
 
   constructor(private readonly httpClient: HttpClient) { }
 
-
+  loadById(id: string){
+   return this.httpClient.get<Course>(`${this.API}/${id}`);
+  }
 
   list(){
     return this.httpClient.get<Course[]>(this.API)

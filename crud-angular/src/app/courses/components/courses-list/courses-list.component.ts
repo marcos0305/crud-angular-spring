@@ -1,37 +1,22 @@
-import { Component, Output} from '@angular/core';
-import { Course } from './course.model';
-import { EventEmitter } from 'stream';
-import { CommonModule } from '@angular/common';
-import { MatTableModule } from '@angular/material/table';
-import { MatSortModule } from '@angular/material/sort';
-import { MatPaginatorModule } from '@angular/material/paginator';
-import { MatIconModule } from '@angular/material/icon';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Course } from '../../model/course';
 
 @Component({
   standalone: true,
   selector: 'app-courses-list',
   templateUrl: './courses-list.component.html',
-  styleUrls: ['./courses-list.component.css'],
-  imports: [
-    CommonModule,
-    MatTableModule,
-    MatSortModule,
-    MatPaginatorModule,
-    MatIconModule
-  ]
+  styleUrls: ['./courses-list.component.scss']
 })
 export class CoursesListComponent {
-readonly courses: Course[]= [];
-@Output() add = new EventEmitter();
+  @Input() courses: Course[] | null = [];
+  @Output() add = new EventEmitter<void>();
+  @Output() edit = new EventEmitter<Course>();
 
-readonly displayedColumns = ['name', 'category', 'actions'];
-
-constructor(){}
-
-  onAdd(){
-    this.add.emit('addEvent');
+  onAdd() {
+    this.add.emit();
   }
-  onEdit(course:Course){
-    console.log('Editando curso:', course);
+
+  onEdit(course: Course) {
+    this.edit.emit(course);
   }
 }

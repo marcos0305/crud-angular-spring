@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { UntypedFormGroup, ReactiveFormsModule, FormControl, FormBuilder } from '@angular/forms';
+import { ReactiveFormsModule, NonNullableFormBuilder, FormGroup } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -8,6 +8,8 @@ import { MatOption } from '@angular/material/core';
 import { CoursesService } from '../../services/courses.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Location } from '@angular/common';
+import { ActivatedRoute } from '@angular/router';
+import { Course } from '../../model/course';
 
 
 @Component({
@@ -19,15 +21,27 @@ import { Location } from '@angular/common';
 })
 export class CourseFormComponent {
 
-  form: UntypedFormGroup;
+  form!: FormGroup;
 
-  constructor(public UntypedFormBuilder: FormBuilder,
+  constructor(public formBuilder: NonNullableFormBuilder,
     public service: CoursesService,
     public snackBar: MatSnackBar,
-    public location: Location ){
-    this.form = this.UntypedFormBuilder.group({
-      name: new FormControl (''),
-      category:['']
+    public location: Location,
+    public route: ActivatedRoute){
+
+      this.form = this.formBuilder.group({
+        _id: [''],
+        name: [''],
+        category: ['']
+      });
+  }
+
+  ngOnInit(): void{
+    const course:Course = this.route.snapshot.data['course'];
+    this.form.setValue({
+      _id: course._id,
+      name: course.name,
+      category: course.category
     });
   }
 

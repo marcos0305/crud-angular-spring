@@ -3,10 +3,11 @@
 <div class="column-flex mat-elevation-z8">
   <ng-container *ngIf="courses$ | async as courses; else loading">
     <app-courses-list
-  [courses]="courses$ | async"
+  [courses]="courses"
   (add)="onAdd()"
-  (edit)="onEdit($event)">
-</app-courses-list>
+  (edit)="onEdit($event)"
+  (remove)="onRemove($event)"
+  ></app-courses-list>
   </ng-container>
 
   <ng-template #loading>

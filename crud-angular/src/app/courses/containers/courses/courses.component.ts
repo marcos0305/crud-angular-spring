@@ -13,6 +13,7 @@ import { CommonModule } from '@angular/common';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'; // Importe o módulo aqui
 import { Action } from 'rxjs/internal/scheduler/Action';
 import { error } from 'console';
+import { TemplatePortal } from '@angular/cdk/portal';
 
 
 
@@ -66,15 +67,23 @@ export class CoursesComponent {
   }
 
   onRemove(course:Course){
-    this.coursesService.remove(course._id).subscribe(
-    () =>{
-      this.refresh();
-      this.snackBar.open('Erro ao removido curso','',{duration:5000,
-        verticalPosition:'top',
-        horizontalPosition: 'center'
+      const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+        data: 'Tem certeza que deseja remover esse curso?',
       });
-    },
-    error => this.onError('Erro ao tentar remover curso.')
-  );
+
+      dialogRef.afterClosed().subscribe((result: boolean) => {
+       if(result){
+        this.coursesService.remove(course._id).subscribe(
+          () =>{
+            this.refresh();
+            this.snackBar.open('Erro ao removido curso','',{duration:5000,
+              verticalPosition:'top',
+              horizontalPosition: 'center'
+            });
+          },
+          error => this.onError('Erro ao tentar remover curso.')
+        );
+       }
+      });
  }
 }

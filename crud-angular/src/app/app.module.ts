@@ -8,7 +8,6 @@ import { MatTableModule } from '@angular/material/table';
 import { MatIconModule } from '@angular/material/icon';
 import { MatHeaderCell } from '@angular/material/table';
 
-
 @NgModule({
   declarations: [
 
@@ -21,7 +20,8 @@ import { MatHeaderCell } from '@angular/material/table';
     BrowserAnimationsModule,
     MatTableModule,
     MatIconModule,
-    MatHeaderCell
+    MatHeaderCell,
+    
 
   ]
 })

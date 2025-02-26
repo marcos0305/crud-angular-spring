@@ -1,6 +1,7 @@
 package com.marcos.crud_spring;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,6 +25,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import lombok.AllArgsConstructor;
 import repository.CourseRespository;
+import service.CourseService;
 
 @Validated
 @SuppressWarnings("unused")
@@ -33,16 +35,17 @@ import repository.CourseRespository;
 public class CourseController {
 
     private final CourseRespository courseRespository; 
+    private final CourseService courseService; 
 
     @GetMapping
     public List<Course> list(){
-        return courseRespository.findAll();
+        return courseService.list();
     }
 
     @GetMapping("/{id}")
     public ResponseEntity <Course> findById(@PathVariable @NotNull @Positive Long id) {
-        return courseRespository.findById(id)
-        .map(record -> ResponseEntity.ok().body(record))
+        return courseService.findById(id)
+        .map(recordFound -> ResponseEntity.ok().body(recordFound))
         .orElse(ResponseEntity.notFound().build());
     }
 
@@ -50,8 +53,9 @@ public class CourseController {
     @PostMapping 
     @ResponseStatus(code = HttpStatus.CREATED)
     public Course create(@RequestBody @Valid Course course ){
-       return courseRespository.save(course);
+       return courseService.create(course);
     }
+   
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable @NotNull @Positive long id){
       return courseRespository.findById(id)

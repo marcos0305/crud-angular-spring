@@ -1,4 +1,4 @@
-package com.marcos.crud_spring;
+package com.marcos.crud_spring.controller;
 
 import java.util.List;
 import java.util.Optional;
@@ -43,10 +43,9 @@ public class CourseController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity <Course> findById(@PathVariable @NotNull @Positive Long id) {
-        return courseService.findById(id)
-        .map(recordFound -> ResponseEntity.ok().body(recordFound))
-        .orElse(ResponseEntity.notFound().build());
+    public Course findById(@PathVariable @NotNull @Positive Long id) {
+        return courseService.findById(id);
+    
     }
 
     //@RequestMapping(method = RequestMethod.POST)
@@ -55,14 +54,17 @@ public class CourseController {
     public Course create(@RequestBody @Valid Course course ){
        return courseService.create(course);
     }
-   
+
+    public Course update (@PathVariable @NotNull @Positive Long id,
+        @RequestBody @Valid Course course){
+            return courseService.update(id, course);
+        }
+    
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> delete(@PathVariable @NotNull @Positive long id){
-      return courseRespository.findById(id)
-        .map(recordFound -> {
+    @ResponseStatus(code = HttpStatus.NO_CONTENT)
+    public void delete(@PathVariable @NotNull @Positive long id){
            courseRespository.deleteById(id);
-            return ResponseEntity.noContent().<Void>build();
-        })
-        .orElse(ResponseEntity.notFound().build());
+        }
+        
     }
-}
+

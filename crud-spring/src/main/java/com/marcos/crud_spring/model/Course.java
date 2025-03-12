@@ -37,4 +37,9 @@ public class Course {
     @Column(length = 10, nullable = false)
     private String category;
 
+    @NotNull
+    @Length(max = 10)
+    @Length(max = 10)
+    @Column(length = 10, nullable = false)
+    private String status = "Ativo";
 }

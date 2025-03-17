@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.marcos.crud_spring.model.Course;
 
+import edu.kit.kastel.sdq.artemis4j.client.CourseDTO;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
@@ -38,12 +40,12 @@ public class CourseController {
     private final CourseService courseService; 
 
     @GetMapping
-    public List<Course> list(){
+    public List<CourseDTO> list(){
         return courseService.list();
     }
 
     @GetMapping("/{id}")
-    public Course findById(@PathVariable @NotNull @Positive Long id) {
+    public CourseDTO findById(@PathVariable @NotNull @Positive Long id) {
         return courseService.findById(id);
     
     }
@@ -51,19 +53,21 @@ public class CourseController {
     //@RequestMapping(method = RequestMethod.POST)
     @PostMapping 
     @ResponseStatus(code = HttpStatus.CREATED)
-    public Course create(@RequestBody @Valid Course course ){
+    public CourseDTO create(@RequestBody @Valid @NotNull CourseDTO course ){
        return courseService.create(course);
     }
 
-    public Course update (@PathVariable @NotNull @Positive Long id,
-        @RequestBody @Valid Course course){
+    @PutMapping
+    
+    public CourseDTO update (@PathVariable @NotNull @Positive Long id,
+        @RequestBody @Valid @NotNull CourseDTO course){
             return courseService.update(id, course);
         }
     
     @DeleteMapping("/{id}")
     @ResponseStatus(code = HttpStatus.NO_CONTENT)
-    public void delete(@PathVariable @NotNull @Positive long id){
-           courseRespository.deleteById(id);
+    public void delete(@PathVariable @NotNull @Positive Long id){
+           courseRespository.deleteAll();
         }
         
     }

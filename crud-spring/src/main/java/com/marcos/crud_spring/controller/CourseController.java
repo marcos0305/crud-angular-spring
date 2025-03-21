@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -40,12 +41,12 @@ public class CourseController {
     private final CourseService courseService; 
 
     @GetMapping
-    public List<CourseDTO> list(){
+    public  List<com.marcos.crud_spring.dto.CourseDTO> list(){
         return courseService.list();
     }
 
     @GetMapping("/{id}")
-    public CourseDTO findById(@PathVariable @NotNull @Positive Long id) {
+    public com.marcos.crud_spring.dto.CourseDTO findById(@PathVariable @NotNull @Positive Long id) {
         return courseService.findById(id);
     
     }
@@ -53,16 +54,15 @@ public class CourseController {
     //@RequestMapping(method = RequestMethod.POST)
     @PostMapping 
     @ResponseStatus(code = HttpStatus.CREATED)
-    public CourseDTO create(@RequestBody @Valid @NotNull CourseDTO course ){
+    public com.marcos.crud_spring.dto.CourseDTO create(@RequestBody @Valid @NotNull com.marcos.crud_spring.dto.@Valid @NotNull CourseDTO course ){
        return courseService.create(course);
     }
 
-    @PutMapping
-    
-    public CourseDTO update (@PathVariable @NotNull @Positive Long id,
-        @RequestBody @Valid @NotNull CourseDTO course){
-            return courseService.update(id, course);
-        }
+    @PutMapping("/{id}")
+    public com.marcos.crud_spring.dto.CourseDTO update(@PathVariable @NotNull @Positive Long id,
+     @RequestBody @Valid com.marcos.crud_spring.dto.@Valid @NotNull CourseDTO course){
+        return courseService.update(id, course);
+    }
     
     @DeleteMapping("/{id}")
     @ResponseStatus(code = HttpStatus.NO_CONTENT)

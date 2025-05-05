@@ -1,28 +1,34 @@
 package service;
 
+import java.util.Locale.Category;
+
+import org.hibernate.validator.constraints.Length;
+
+import enums.converters.CategoryConverter;
+import jakarta.persistence.Column;
+import jakarta.persistence.Convert;
+import jakarta.validation.constraints.Pattern;
+
 public class Course {
+    @Length(max = 10)
+    @Pattern(regexp = "Ativo|Inativo")
+    @Column(length = 10, nullable = false)
+    private Long id;
 
-    public int getId() {
-        throw new UnsupportedOperationException("Unimplemented method 'getId'");
-    }
+    @Length( min = 5, max = 100)
+    @Pattern(regexp = "Ativo|Inativo")
+    @Column(length = 100, nullable = false)
+    private String name;
 
-    public String getName() {
+    @Length(max = 10)
+    @Pattern(regexp = "Ativo|Inativo")
+    @Column(length = 10, nullable = false)
+    @Convert (converter = CategoryConverter.class)
+    private Category category;
 
-        throw new UnsupportedOperationException("Unimplemented method 'getName'");
-    }
-
-    public String getCategory() {
-
-        throw new UnsupportedOperationException("Unimplemented method 'getCategory'");
-    }
-
-    public void setId(int id) {
-
-        throw new UnsupportedOperationException("Unimplemented method 'setId'");
-    }
-
-    public void setCategory(String category) {
-        throw new UnsupportedOperationException("Unimplemented method 'setCategory'");
-    }
+    @Length(max = 10)
+    @Pattern(regexp = "Ativo|Inativo")
+    @Column(length = 10, nullable = false)
+    private String status = "Ativo";
 
 }

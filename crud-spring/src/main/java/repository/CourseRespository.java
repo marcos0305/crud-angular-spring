@@ -6,7 +6,6 @@ import org.springframework.stereotype.Repository;
 
 import com.marcos.crud_spring.model.Course;
 
-import jakarta.validation.Valid;
 
 @Repository
 public interface CourseRespository extends JpaRepository<Course, Long> {

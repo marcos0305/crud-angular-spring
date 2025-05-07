@@ -13,5 +13,5 @@ public record CourseDTO(
         @NotBlank @NotNull @Length(min = 5, max = 80) String name,
         @NotNull @Length(min = 10) @Pattern(regexp = "Back-end|Front-end") String category,
         @NotNull @Length(max = 10) @Length(max = 10) String status) {
-
+            
     }

@@ -5,6 +5,9 @@ import org.springframework.stereotype.Component;
 import com.marcos.crud_spring.dto.CourseDTO;
 import com.marcos.crud_spring.model.Course;
 
+import enums.Category;
+import lombok.val;
+
 @Component
 public class CourseMapper {
     
@@ -26,7 +29,19 @@ public class CourseMapper {
         course.setId(courseDTO.id());
        }
        course.setName(courseDTO.name());
-       course.setCategory(courseDTO.category());
+       course.setCategory(convertCategoryValue(courseDTO.category()));
         return course;
     }
+
+     public String convertCategoryValue(String value){
+        if (value == null) {
+            return null;
+        }
+        return switch (value){
+            case "Front-end" -> Category.FRONT_END.name();
+            case "Back-end" -> Category.BACK_END.name();
+            default -> throw new IllegalArgumentException("Categoria inválida: " + value);
+        };
+     }
+
 }

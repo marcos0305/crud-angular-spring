@@ -1,31 +1,30 @@
 package enums.converters;
 
-import ch.qos.logback.core.status.Status;
-import enums.Category;
+
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
+import java.util.stream.Stream;
 
-@Converter(autoApply = true)
-public class StatusConverter implements AttributeConverter <Status, String> {
 
+@Converter
+public class StatusConverter implements AttributeConverter<enums.Status, String> {
     @Override
-    public String convertToDatabaseColumn(Status category) {
-        if (category == null){
+    public String convertToDatabaseColumn(enums.Status status) {
+        if (status == null) {
             return null;
         }
-        return category.getMessage();
+        return status.getValue();
     }
 
     @Override
-    public Status convertToEntityAttribute(String value) {
-        if(value == null){
+    public enums.Status convertToEntityAttribute(String value) {
+        if (value == null) {
             return null;
         }
-        return Stream.of(Status.values())
-            //.filter(c -> c.getValue().equals(value))
-            //.findFirst()
-            .orElseThrow(() -> new IllegalArgumentException("Categoria não encontrada para o valor: " + value));
+        return Stream.of(enums.Status.values())
+            .filter(c -> c.getValue().equals(value))
+            .findFirst()
+            .orElseThrow(() -> new IllegalArgumentException("Status não encontrado para o valor: " + value));
     }
-
 }
 

@@ -1,6 +1,5 @@
 package enums.converters;
 
-import enums.Category;
 import enums.Status;
 
 public class Stream {

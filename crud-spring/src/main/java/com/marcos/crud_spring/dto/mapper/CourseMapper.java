@@ -6,7 +6,6 @@ import com.marcos.crud_spring.dto.CourseDTO;
 import com.marcos.crud_spring.model.Course;
 
 import enums.Category;
-import lombok.val;
 
 @Component
 public class CourseMapper {
@@ -15,7 +14,7 @@ public class CourseMapper {
         if (course == null){
             return null;
         }
-        return new CourseDTO(course.getId(), course.getName(), course.getCategory(), null);
+        return new CourseDTO(course.getId(), course.getName(), course.getCategory(), course.getLessons());
     }
 
     public Course toEntity(CourseDTO courseDTO) {

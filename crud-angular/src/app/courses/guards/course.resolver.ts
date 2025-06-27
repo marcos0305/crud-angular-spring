@@ -11,5 +11,5 @@ export const courseResolver: ResolveFn<Course> = (route: ActivatedRouteSnapshot,
     return service.loadById(route.params['id']);
   }
 
-  return of({ _id: '', name: '', category: '' });
+  return of({ _id: '', name: '', category: '', lessons: [] });
 };

@@ -1,3 +1,4 @@
+import { Lesson } from './../../model/lesson';
 import { Component } from '@angular/core';
 import { ReactiveFormsModule, NonNullableFormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -22,7 +23,7 @@ import { Course } from '../../model/course';
 export class CourseFormComponent {
 
   form!: FormGroup;
-name: any;
+  name: any;
 
   constructor(public formBuilder: NonNullableFormBuilder,
     public service: CoursesService,
@@ -30,59 +31,54 @@ name: any;
     public location: Location,
     public route: ActivatedRoute){
 
-      this.form = this.formBuilder.group({
-        _id: [''],
-        name: ['',[Validators.required, Validators.minLength(5), Validators.maxLength(50)]],
-        category: ['', [Validators.required]]
-      });
+
   }
 
   ngOnInit(): void{
     const course:Course = this.route.snapshot.data['course'];
-    this.form.setValue({
-      _id: course._id,
-      name: course.name,
-      category: course.category
+    this.form = this.formBuilder.group({
+          _id: [course._id],
+          name: [course.name,[Validators.required,
+          Validators.minLength(5),
+          Validators.maxLength(50)]],
+          category: [course.category, [Validators.required]],
+          lessons:this.formBuilder.array(this.retrieveLessons(course))
+      });
+
+  }
+
+  private retrieveLessons(course:Course){
+    const lessons: any[] = [];
+    if(course?.lessons){
+      course.lessons.forEach(lesson => lessons.push(this.createLesson(lesson)))
+    }else{
+      lessons.push(this.createLesson());
+    }
+    return lessons;
+  }
+
+  private createLesson(lesson: Lesson = {id: '', name:'',youtubeUrl: ''}){
+    this.formBuilder.group({
+      id: [lesson.id],
+      name: [lesson.name],
+      youtubeUrl: [lesson.youtubeUrl]
     });
   }
 
   onSubmit(){
     this.service.save(this.form.value)
-    .subscribe({
-      next:() => console.log('Resultado', this.onSucess),
-      error: () =>this.onError()
-    });
+    .subscribe(result =>this.onSuccess(), error => this.onError())
+  }
+
+  onError(): void {
+    throw new Error('Method not implemented.');
+  }
+  onSuccess(): void {
+    throw new Error('Method not implemented.');
   }
   onCancel(){
     this.location.back
   }
 
-  private onSucess(){
-    this.snackBar.open('Curso salvo com sucesso ','',{duration:1000});
-    this.onCancel();
-  }
 
-  private onError(){
-    this.snackBar.open('Erro ao salvar curso','',{duration:1000});
-  }
-
-  getErrorMessage(fieldName:string){
-    const field = this.form.get(fieldName);
-
-    if(field?.hasError('required')){
-      return 'Campo obrigatório';
-    }
-
-    if(field?.hasError('minlenght')){
-      const requiredLength = field.errors ? field.errors['minlength']['requiredLenght']: 5;
-      return `Tamanho mínimo precisa ser de ${requiredLength} caracteres`;
-    }
-
-    if(field?.hasError('maxlenght')){
-      const requiredLength = field.errors ? field.errors['maxlength']['requiredLenght']: 50;
-      return `Tamanho máximo excedido de ${requiredLength} caracteres`;
-    }
-
-      return 'Erro';
-  }
 }

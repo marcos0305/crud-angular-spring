@@ -1,6 +1,6 @@
 import { Lesson } from './../../model/lesson';
 import { Component } from '@angular/core';
-import { ReactiveFormsModule, NonNullableFormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ReactiveFormsModule, NonNullableFormBuilder, FormGroup, Validators, UntypedFormArray } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -11,16 +11,19 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { Course } from '../../model/course';
-
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-course-form',
   standalone: true,
-  imports: [ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatToolbarModule, MatCardModule, MatOption ],
+  imports: [ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatToolbarModule, MatCardModule, MatOption, MatIconModule ],
   templateUrl: './course-form.component.html',
   styleUrl: './course-form.component.scss'
 })
 export class CourseFormComponent {
+getErrorMessage(arg0: string) {
+throw new Error('Method not implemented.');
+}
 
   form!: FormGroup;
   name: any;
@@ -63,6 +66,10 @@ export class CourseFormComponent {
       name: [lesson.name],
       youtubeUrl: [lesson.youtubeUrl]
     });
+  }
+
+  getLessonsFormArray(){
+    return (<UntypedFormArray>this.form.get('lessons')).controls;
   }
 
   onSubmit(){

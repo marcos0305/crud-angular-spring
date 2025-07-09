@@ -17,8 +17,35 @@
         <mat-option value="front-end">Front-End</mat-option>
         <mat-option value="back-end">Back-End 3</mat-option>
       </mat-select>
-      <mat-error *ngIf="form.get('category').invalid">{{ getErrorMessage("category") }}</mat-error>
+      <mat-error *ngIf="form.get('category').invalid">{{ getErrorMessage("category") }}
+      </mat-error>
     </mat-form-field>
+
+    <mat-toolbar>
+        <span>Aulas</span>
+        <button mat-icon-button>
+          <mat-icon>add</mat-icon>
+        </button>
+    </mat-toolbar>
+
+    <table formArrayName="lessons" *ngFor="let lessons of getLessonsFormArray(); let i = index">
+      <tr [formArrayName]="i">
+        <td>
+          <mat-form-field class="full-width">
+            <mat-label>Nome da Aula</mat-label>
+          <input matInput formControlName="name"/>
+          </mat-form-field>
+        </td>
+        <td>
+          <mat-form-field class="full-width">
+            <mat-label>URL</mat-label>
+            <span matPrefix>http://youtu.be/</span>
+          <input matInput formControlName="youtubeUrl"/>
+          </mat-form-field>
+        </td>
+      </tr>
+    </table>
+
   </form>
 </mat-card-content>
 

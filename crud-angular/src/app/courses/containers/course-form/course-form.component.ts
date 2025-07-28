@@ -72,6 +72,16 @@ throw new Error('Method not implemented.');
     return (<UntypedFormArray>this.form.get('lessons')).controls;
   }
 
+  addNewLessons(): void{
+    const lessons = this.form.get('lesson') as UntypedFormArray;
+    lessons.push(this.createLesson);
+  }
+
+  removeLesson(index: number){
+    const lessons = this.form.get('lesson') as UntypedFormArray;
+    lessons.removeAt(index);
+  }
+
   onSubmit(){
     this.service.save(this.form.value)
     .subscribe(result =>this.onSuccess(), error => this.onError())

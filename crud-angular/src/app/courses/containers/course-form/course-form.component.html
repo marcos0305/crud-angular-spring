@@ -23,7 +23,7 @@
 
     <mat-toolbar>
         <span>Aulas</span>
-        <button mat-icon-button>
+        <button mat-icon-button (click)="addNewLessons()">
           <mat-icon>add</mat-icon>
         </button>
     </mat-toolbar>
@@ -42,6 +42,11 @@
             <span matPrefix>http://youtu.be/</span>
           <input matInput formControlName="youtubeUrl"/>
           </mat-form-field>
+        </td>
+        <td>
+          <button mat-icon-button (click)="removeLesson(i)">
+            <mat-icon aria-label="Remover aula">Remove</mat-icon>
+          </button>
         </td>
       </tr>
     </table>

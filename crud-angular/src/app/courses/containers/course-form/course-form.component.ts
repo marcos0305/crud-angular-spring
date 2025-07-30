@@ -45,7 +45,7 @@ throw new Error('Method not implemented.');
           Validators.minLength(5),
           Validators.maxLength(50)]],
           category: [course.category, [Validators.required]],
-          lessons:this.formBuilder.array(this.retrieveLessons(course))
+          lessons:this.formBuilder.array(this.retrieveLessons(course), Validators.required)
       });
 
   }
@@ -63,8 +63,12 @@ throw new Error('Method not implemented.');
   private createLesson(lesson: Lesson = {id: '', name:'',youtubeUrl: ''}){
     this.formBuilder.group({
       id: [lesson.id],
-      name: [lesson.name],
-      youtubeUrl: [lesson.youtubeUrl]
+      name: [lesson.name, [Validators.required,
+      Validators.minLength(5),
+      Validators.maxLength(50)]],
+      youtubeUrl: [lesson.youtubeUrl, [Validators.required,
+      Validators.minLength(10),
+      Validators.maxLength(11)]]
     });
   }
 
@@ -83,8 +87,12 @@ throw new Error('Method not implemented.');
   }
 
   onSubmit(){
-    this.service.save(this.form.value)
-    .subscribe(result =>this.onSuccess(), error => this.onError())
+    if (this.form.valid){
+      this.service.save(this.form.value)
+      .subscribe(result =>this.onSuccess(), error => this.onError())
+    }else{
+      alert('form invalido');
+    }
   }
 
   onError(): void {
@@ -97,5 +105,8 @@ throw new Error('Method not implemented.');
     this.location.back
   }
 
-
+isFormArratRequired(){
+  const lessons = this.form.get('lessons') as UntypedFormArray;
+  return !lessons.valid && lessons.hasError('required') && lessons.touched;
+}
 }

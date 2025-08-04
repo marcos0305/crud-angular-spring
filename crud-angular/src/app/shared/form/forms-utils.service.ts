@@ -48,7 +48,7 @@ export class FormsUtilsService {
     return this.getErrorMessageFromField(field);
   }
 
-  isFormArratRequired(formGroup: UntypedFormGroup, formArrayName: string){
+  isFormArrayRequired(formGroup: UntypedFormGroup, formArrayName: string){
   const formArray = formGroup.get(formArrayName) as UntypedFormArray;
   return !formArray.valid && formArray.hasError('required') && formArray.touched;
 }
@@ -56,4 +56,6 @@ export class FormsUtilsService {
   getErrorMessageFromField(field: UntypedFormControl) {
     throw new Error('Method not implemented.');
   }
+
+
 }

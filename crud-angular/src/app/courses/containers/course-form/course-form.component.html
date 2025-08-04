@@ -28,7 +28,7 @@
         </button>
     </mat-toolbar>
 
-    <mat-error *ngIf="isFormArratRequired()">
+    <mat-error *ngIf="formUtils.isFormArratRequired(form)">
       Adicione pelo menos uma aula.
     </mat-error>
 

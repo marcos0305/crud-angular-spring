@@ -12,6 +12,7 @@ import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { Course } from '../../model/course';
 import { MatIconModule } from '@angular/material/icon';
+import { FormsUtilsService } from '../../../shared/form/forms-utils.service';
 
 @Component({
   selector: 'app-course-form',
@@ -32,7 +33,8 @@ throw new Error('Method not implemented.');
     public service: CoursesService,
     public snackBar: MatSnackBar,
     public location: Location,
-    public route: ActivatedRoute){
+    public route: ActivatedRoute,
+    public formUtils: FormsUtilsService){
 
 
   }
@@ -91,22 +93,20 @@ throw new Error('Method not implemented.');
       this.service.save(this.form.value)
       .subscribe(result =>this.onSuccess(), error => this.onError())
     }else{
-      alert('form invalido');
+      this.formUtils.validateAllFormFields(this.form);
     }
   }
 
   onError(): void {
-    throw new Error('Method not implemented.');
+   this.snackBar.open('Erro ao salvar curso', '', {duration:5000});
   }
   onSuccess(): void {
-    throw new Error('Method not implemented.');
+    this.snackBar.open('Curso salvo com sucesso', '', {duration:5000});
+    this.onCancel();
   }
   onCancel(){
     this.location.back
   }
 
-isFormArratRequired(){
-  const lessons = this.form.get('lessons') as UntypedFormArray;
-  return !lessons.valid && lessons.hasError('required') && lessons.touched;
-}
+
 }

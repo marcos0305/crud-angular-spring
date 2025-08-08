@@ -1,10 +1,13 @@
 package service;
 
+import java.util.List;
 import java.util.Locale.Category;
 
 import org.hibernate.validator.constraints.Length;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.marcos.crud_spring.model.Lesson;
+
 import enums.Status; 
 import enums.converters.CategoryConverter;
 import enums.converters.StatusConverter;
@@ -38,5 +41,10 @@ public class Course {
     @Column(length = 10, nullable = false)
     @Convert (converter = StatusConverter.class)
     private Status status = Status.ACTIVE;
+
+    public List<Lesson> getLessons() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getLessons'");
+    }
 
 }

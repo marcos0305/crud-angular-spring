@@ -11,7 +11,7 @@ import com.marcos.crud_spring.model.Course;
 import com.marcos.crud_spring.model.Lesson;
 
 import enums.Category;
-import lombok.var;
+
 
 @Component
 public class CourseMapper {

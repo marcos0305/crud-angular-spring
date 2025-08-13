@@ -43,7 +43,6 @@ public class Course {
     private Status status = Status.ACTIVE;
 
     public List<Lesson> getLessons() {
-        // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'getLessons'");
     }
 

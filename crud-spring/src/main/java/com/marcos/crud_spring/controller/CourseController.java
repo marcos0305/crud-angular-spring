@@ -17,17 +17,21 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.marcos.crud_spring.dto.CoursePageDTO;
 import com.marcos.crud_spring.model.Course;
 
 import edu.kit.kastel.sdq.artemis4j.client.CourseDTO;
 import jakarta.validation.ConstraintViolationException;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.PositiveOrZero;
 import repository.CourseRespository;
 import service.CourseService;
 
@@ -42,8 +46,8 @@ public class CourseController {
     private final CourseService courseService = null; 
 
     @GetMapping
-    public  List<com.marcos.crud_spring.dto.CourseDTO> list(){
-        return courseService.list();
+    public  CoursePageDTO list(@RequestParam(defaultValue = "0") @PositiveOrZero int page, @RequestParam(defaultValue = "10") @Positive @Max(100) int size) {
+        return courseService.list(page, size);
     }
 
     @GetMapping("/{id}")

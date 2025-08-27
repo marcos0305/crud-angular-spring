@@ -1,8 +1,8 @@
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Course } from './../../model/course';
 import { CoursesService } from '../../services/courses.service';
-import { Component} from '@angular/core';
-import { catchError, Observable, of } from 'rxjs';
+import { Component, ViewChild, viewChild} from '@angular/core';
+import { catchError, Observable, of, tap } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { ErrorDialogComponent } from '../../../shared/components/error-dialog/error-dialog.component';
 import { CategoryPipe } from "../../../shared/pipes/category.pipe";
@@ -11,9 +11,8 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { CoursesListComponent } from '../../components/courses-list/courses-list.component';
 import { CommonModule } from '@angular/common';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'; // Importe o módulo aqui
-import { Action } from 'rxjs/internal/scheduler/Action';
-import { error } from 'console';
-import { TemplatePortal } from '@angular/cdk/portal';
+import { CoursePage } from '../../model/course-page';
+import { MatPaginator, PageEvent } from "@angular/material/paginator";
 
 
 
@@ -21,18 +20,24 @@ import { TemplatePortal } from '@angular/cdk/portal';
   selector: 'app-courses',
   standalone: true,
   imports: [
-    CategoryPipe,
     MatToolbarModule,
     CoursesListComponent,
     CommonModule,
-    MatProgressSpinnerModule
-  ],
+    MatProgressSpinnerModule,
+    MatPaginator
+],
   templateUrl: './courses.component.html',
   styleUrl: './courses.component.scss',
 })
 export class CoursesComponent {
 
-  courses$: Observable <Course[]> | null = null;
+  courses$: Observable <CoursePage> | null = null;
+
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+
+  pageIndex = 0;
+  pageSize = 10;
+  courses: Observable<CoursePage | { courses: never[]; totalElments: number; totalPages: number; }> | undefined;
 
   constructor(
     public dialog: MatDialog,
@@ -44,11 +49,16 @@ export class CoursesComponent {
     this.refresh();
   }
 
-  refresh(){
-    this.courses$ = this.coursesService.list().pipe(
+  refresh(pageEvent: PageEvent = { length: 0, pageIndex: 0, pageSize: 10 } ){
+    this.courses = this.coursesService.list(pageEvent.pageIndex, pageEvent.pageSize)
+    .pipe(
+      tap(() => {
+        this.pageIndex = pageEvent.pageIndex;
+        this.pageSize = pageEvent.pageSize;
+      }),
       catchError(error => {
         this.onError('Erro na pagina.');
-        return of([]);
+        return of({courses: [], totalElments: 0, totalPages: 0});
       })
     );
   }
@@ -67,7 +77,7 @@ export class CoursesComponent {
   }
 
   onRemove(course:Course){
-      const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      const dialogRef = this.dialog.open(ErrorDialogComponent, {
         data: 'Tem certeza que deseja remover esse curso?',
       });
 

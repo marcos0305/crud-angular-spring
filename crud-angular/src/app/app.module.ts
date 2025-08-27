@@ -7,6 +7,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatTableModule } from '@angular/material/table';
 import { MatIconModule } from '@angular/material/icon';
 import { MatHeaderCell } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,7 @@ import { MatHeaderCell } from '@angular/material/table';
     MatTableModule,
     MatIconModule,
     MatHeaderCell,
-    
+    MatPaginatorModule
 
   ]
 })

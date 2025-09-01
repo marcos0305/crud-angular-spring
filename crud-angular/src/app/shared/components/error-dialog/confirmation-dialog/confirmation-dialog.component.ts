@@ -11,7 +11,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 export class DialogOverviewExampleDialog {
 onClick: any;
  constructor(
-  public dialogRef: MatDialogRef<ConfirmationDialogComponent>,
+  public dialogRef: MatDialogRef<DialogOverviewExampleDialog>,
   @Inject(MAT_DIALOG_DATA) public data: string,
  ){}
 

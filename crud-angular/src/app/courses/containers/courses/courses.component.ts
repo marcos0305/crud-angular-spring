@@ -5,7 +5,6 @@ import { Component, ViewChild, viewChild} from '@angular/core';
 import { catchError, Observable, of, tap } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { ErrorDialogComponent } from '../../../shared/components/error-dialog/error-dialog.component';
-import { CategoryPipe } from "../../../shared/pipes/category.pipe";
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { CoursesListComponent } from '../../components/courses-list/courses-list.component';

@@ -1,28 +1,31 @@
 <mat-toolbar color="primary">Cursos Disponíveis</mat-toolbar>
 
-<div *ngIf="courses$ | async as courses; else loading"
-class="column-flex mat-elevation-z8">
-  <ng-container >
-    <app-courses-list
-  [courses]="courses.courses"
-  (add)="onAdd()"
-  (edit)="onEdit($event)"
-  (remove)="onRemove($event)"
-  ></app-courses-list>
-  </ng-container>
-
-  <mat-paginator [pageSizeOptions] = "[5, 10, 20]"
-    showFirstLastButtons
-    pageIndex="pageIndex"
-    pageSize="pageSize"
-    [length]="courses.totalElements"
-    (page)="refresh($event)"
-    aria-label="Select page">
-  </mat-paginator>
-
-
-    </div>
-    <ng-template #loading>
-    <div class="loading-spinner">
-      <mat-spinner></mat-spinner>
-    </div>
+@if (courses$ | async; as courses) {
+  <div
+    class="column-flex mat-elevation-z8">
+    <ng-container >
+      <app-courses-list
+        [courses]="courses.courses"
+        (add)="onAdd()"
+        (edit)="onEdit($event)"
+        (remove)="onRemove($event)"
+      ></app-courses-list>
+    </ng-container>
+    <mat-paginator [pageSizeOptions] = "[5, 10, 20]"
+      showFirstLastButtons
+      pageIndex="pageIndex"
+      pageSize="pageSize"
+      [length]="courses.totalElements"
+      (page)="refresh($event)"
+      aria-label="Select page">
+    </mat-paginator>
+  </div>
+} @else {
+  <div class="loading-spinner">
+    <mat-spinner></mat-spinner>
+  </div>
+}
+<ng-template #loading>
+  <div class="loading-spinner">
+    <mat-spinner></mat-spinner>
+  </div>
